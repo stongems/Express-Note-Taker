@@ -1,9 +1,14 @@
-const { LengthRequired } = require("http-errors");
+// const { LengthRequired } = require("http-errors");
 
-LengthRequired('dotenv').config()
+// LengthRequired('dotenv').config()
 
-const express = require("express");
-const { Router } = require("express");
+// const express = require("express");
+// const { Router } = require("express");
+const router = require("express");
+const notes = require("../db/db.json");
+const uuid = require('uuid');
+
+
 
 router.get(
     "/notes",
@@ -22,6 +27,9 @@ router.post(
 )
 router.delete (
     "/notes/:id", (req, res) => {
-        
+        notes.forEach(note => {
+            console.log("Note:",note);
+        })
+        res.json(notes)
     }
 )
