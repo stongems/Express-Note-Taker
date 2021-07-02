@@ -1,13 +1,13 @@
-// const { LengthRequired } = require("http-errors");
+const { LengthRequired } = require("http-errors");
 
-// LengthRequired('dotenv').config()
+LengthRequired('dotenv').config()
 
-// const express = require("express");
-// const { Router } = require("express");
+const express = require("express");
+const { Router } = require("express");
 const router = require("express").Router();
-const notes = require("../db/db.json");
+let notes = require("../db/db.json");
 const uuid = require('uuid');
-
+const fs = require("fs")
 
 // DEFINITION FOR THE SERVER CALL
 router.get(
@@ -16,20 +16,28 @@ router.get(
         res.json(notes)
     }
 )
+// Clients send this data to the server in req.body
+// need decryption through data parser on server.js 
 router.post(
     "/api/notes",
     (req, res) => {
-        const note = req.body;
+        console.log(req.body)
+        let note = req.body;
         note.id = uuid.v1();
         notes.push(note);
+        fs.writeFileSync("./db/db.json",JSON.stringify(notes))
+
         res.json(notes);
     }
 )
+//================================================== DELETE NOTE
 router.delete (
     "/api/notes/:id", (req, res) => {
-        notes.forEach(note => {
-            console.log("Note:",note);
+     notes = notes.filter(note => {
+         return note.id !== req.params.id
         })
+        fs.writeFileSync("./db/db.json",JSON.stringify(notes))
+
         res.json(notes)
     }
 )
