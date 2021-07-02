@@ -1,6 +1,6 @@
 const { LengthRequired } = require("http-errors");
 
-LengthRequired('dotenv').config()
+LengthRequired('dotenv').config();
 
 const express = require("express");
 const { Router } = require("express");

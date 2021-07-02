@@ -1,7 +1,7 @@
 const router = require("express").Router()
 const path = require("path")
 
-// Allows us to get the enire path and send it back to the browser
+// Allows us to get the entire path and send it back to the browser
 router.get('/', (req, res) => {
     res.sendFile(path.join(__dirname, "../public/index.html"))
 }),
